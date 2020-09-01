@@ -67,3 +67,31 @@ values (3, 'VW', 'Gol', 2019, 2020, 35000);
 #### E - Gerando as tabelas do banco de dados
 - Como ainda não temos a tabela representada pela classe dados, precisamos criá-la.
 - O JPA pode fazer isso pra gente, graças à propriedade javax.persistence.schema-generation.database.action com valor drop-and-create , que incluímos no arquivo persistence.xml.
+
+#### F - Definindo detalhes físicos de tabelas
+- Vamos analisar as alterações que fizemos individualmente.
+  - Especificamos o nome da tabela como tab_veiculo . Se não fizermos isso, o nome da tabela será considerado o mesmo nome da classe.
+
+```
+@Table(name = "tab_veiculo")
+public class Veiculo {
+```
+  - Definimos o tamanho da coluna com 60 e com restrição not null.
+
+```
+@Column(length = 60, nullable = false)
+private String fabricante;
+```
+  - Especificamos o nome da coluna como ano_fabricacao e com restrição not null. Se o nome da coluna não for especificado, por padrão, ela receberá o mesmo nome do atributo mapeado.
+
+```
+@Column(name = "ano_fabricacao", nullable = false)
+private Integer anoFabricacao;
+```
+
+  - Atribuímos a precisão de 10 com escala de 2 casas na coluna de número decimal, especificando ainda que ela pode receber valores nulos.
+
+```
+@Column(precision = 10, scale = 2, nullable = true)
+private BigDecimal valor;
+```
