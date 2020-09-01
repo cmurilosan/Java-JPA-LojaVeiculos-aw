@@ -63,3 +63,7 @@ values (2, 'Ford', 'Fiesta', 2019, 2019, 42000);
 insert into Veiculo (codigo, fabricante, modelo, anoFabricacao, anoModelo, valor)
 values (3, 'VW', 'Gol', 2019, 2020, 35000);
 ```
+
+#### E - Gerando as tabelas do banco de dados
+- Como ainda não temos a tabela representada pela classe dados, precisamos criá-la.
+- O JPA pode fazer isso pra gente, graças à propriedade javax.persistence.schema-generation.database.action com valor drop-and-create , que incluímos no arquivo persistence.xml.

@@ -17,9 +17,10 @@ public class Veiculo {
 	@Column
 	private String fabricante;	
 	private String modelo;
-	private Integer anoFabricante;
+	private Integer anoFabricacao;
 	private Integer anoModelo;
 	private BigDecimal valor;
+	
 	public Long getCodigo() {
 		return codigo;
 	}
@@ -38,11 +39,11 @@ public class Veiculo {
 	public void setModelo(String modelo) {
 		this.modelo = modelo;
 	}
-	public Integer getAnoFabricante() {
-		return anoFabricante;
+	public Integer getAnoFabricacao() {
+		return anoFabricacao;
 	}
-	public void setAnoFabricante(Integer anoFabricante) {
-		this.anoFabricante = anoFabricante;
+	public void setAnoFabricacao(Integer anoFabricante) {
+		this.anoFabricacao = anoFabricante;
 	}
 	public Integer getAnoModelo() {
 		return anoModelo;
