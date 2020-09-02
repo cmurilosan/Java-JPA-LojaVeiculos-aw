@@ -95,3 +95,5 @@ private Integer anoFabricacao;
 @Column(precision = 10, scale = 2, nullable = true)
 private BigDecimal valor;
 ```
+
+#### G - Criando EntityManager
