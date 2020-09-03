@@ -97,3 +97,9 @@ private BigDecimal valor;
 ```
 
 #### G - Criando EntityManager
+- Criamos um bloco estático para inicializar a fábrica de Entity Manager. Isso ocorrerá apenas uma vez, no carregamento da classe. Agora, sempre que
+precisarmos de uma EntityManager , podemos chamar:
+
+```
+EntityManager manager = JpaUtil.getEntityManager();
+```
