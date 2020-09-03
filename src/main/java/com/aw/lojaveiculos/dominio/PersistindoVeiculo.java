@@ -5,8 +5,6 @@ import java.math.BigDecimal;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import com.aw.lojaveiculos.main.JpaUtil;
-
 public class PersistindoVeiculo {
 
 	public static void main(String[] args) {

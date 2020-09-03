@@ -132,7 +132,7 @@ manager.persist(veiculo);
   - Agora fazemos `commit` da transação, para efetivar a inserção do veículo no banco de dados.
 
 ```
-36tx.commit();
+tx.commit();
 ```
   - Finalmente, fechamos o `EntityManager` e o `EntityManagerFactory` .
   
@@ -140,3 +140,17 @@ manager.persist(veiculo);
 manager.close();
 JpaUtil.close();
 ```
+
+#### H - Buscando objetos pelo identificado
+- O método busca o objeto imediatamente no banco de dados, enquanto só executa o SQL quando o objeto for usado pela primeira vez, ou find getReference seja, quando invocamos um método getter da instância, desde que não seja o `getCodigo`.
+- Note que o SQL foi executado apenas quando um getter foi invocado, e não na chamada de getReference .
+
+#### I - Listando objetos
+- A única novidade no código-fonte que usamos são as seguintes linhas:
+
+```
+Query query = manager.createQuery("select v from Veiculo v");
+List<Veiculo> veiculos = query.getResultList();
+```
+- Veja que criamos uma **query** com a **JPQL** e atribuímos na variável **query** . Depois executamos o método `getResultList` e obtivemos uma lista de veículos.
+- As IDEs, como o *IntelliJ IDEA* ou *Eclipse*, podem mostrar um alerta de **Type safety** em `query.getResultList()` . Por enquanto você pode ignorar isso, porque em breve você vai aprender sobre **TypedQuery** e isso será resolvido.

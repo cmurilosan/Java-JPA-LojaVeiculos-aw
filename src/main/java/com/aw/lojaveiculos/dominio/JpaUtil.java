@@ -1,4 +1,4 @@
-package com.aw.lojaveiculos.main;
+package com.aw.lojaveiculos.dominio;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
