@@ -154,3 +154,7 @@ List<Veiculo> veiculos = query.getResultList();
 ```
 - Veja que criamos uma **query** com a **JPQL** e atribuímos na variável **query** . Depois executamos o método `getResultList` e obtivemos uma lista de veículos.
 - As IDEs, como o *IntelliJ IDEA* ou *Eclipse*, podem mostrar um alerta de **Type safety** em `query.getResultList()` . Por enquanto você pode ignorar isso, porque em breve você vai aprender sobre **TypedQuery** e isso será resolvido.
+
+#### J - Atualizando objetos
+- O código acima executa o comando `select` no banco de dados para buscar o veículo de **código 1** , imprime o valor atual do veículo, atribui um novo valor **(soma 500,00 reais)** e imprime um novo valor.
+- Veja que não precisamos chamar nenhum método para a atualização no banco de dados. A alteração foi identificada automaticamente e refletida no banco de dados, através do comando `SQL update`.
