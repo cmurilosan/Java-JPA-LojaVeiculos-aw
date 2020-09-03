@@ -158,3 +158,6 @@ List<Veiculo> veiculos = query.getResultList();
 #### J - Atualizando objetos
 - O código acima executa o comando `select` no banco de dados para buscar o veículo de **código 1** , imprime o valor atual do veículo, atribui um novo valor **(soma 500,00 reais)** e imprime um novo valor.
 - Veja que não precisamos chamar nenhum método para a atualização no banco de dados. A alteração foi identificada automaticamente e refletida no banco de dados, através do comando `SQL update`.
+
+#### K - Excluindo objetos
+- A exclusão de objetos é feita chamando o método `remove` de `EntityManager`, passando como parâmetro o objeto da entidade.

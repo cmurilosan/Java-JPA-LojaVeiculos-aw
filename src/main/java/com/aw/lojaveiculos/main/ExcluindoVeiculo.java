@@ -1,14 +1,12 @@
 package com.aw.lojaveiculos.main;
 
-import java.math.BigDecimal;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import com.aw.lojaveiculos.dominio.JpaUtil;
 import com.aw.lojaveiculos.dominio.Veiculo;
 
-public class AtualizandoVeiculo {
+public class ExcluindoVeiculo {
 
 	public static void main(String[] args) {
 		
@@ -18,11 +16,7 @@ public class AtualizandoVeiculo {
 		
 		Veiculo veiculo = manager.find(Veiculo.class, 1L);
 		
-		System.out.println("Valor atual " + veiculo.getValor());
-		
-		veiculo.setValor(veiculo.getValor().add(new BigDecimal(500)));
-		
-		System.out.println("Novo valor " + veiculo.getValor());
+		manager.remove(veiculo);
 		
 		tx.commit();
 		manager.close();
