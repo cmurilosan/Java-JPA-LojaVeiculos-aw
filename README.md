@@ -46,12 +46,11 @@ que significa que todas as propriedades da classe estão mapeadas para colunas.
 - javax.persistence.jdbc.user : nome do usuário do banco de dados
 - javax.persistence.jdbc.password : senha do usuário do banco de dados
 - javax.persistence.schema-generation.database.action : Gera automaticamente o schema (as tabelas e relacionamentos) na 
-inicialização da aplicação. Configuramos para drop-and-create, ou seja, para recriar as tabelas sempre. Logicamente, isso nos ajuda a ter o banco
+inicialização da aplicação. Configuramos para `drop-and-create`, ou seja, para recriar as tabelas sempre. Logicamente, isso nos ajuda a ter o banco
 sempre limpinho para os nossos testes, mas em produção essa opção não deve ser usada.
 - javax.persistence.sql-load-script-source : Executa um arquivo SQL para uma carga de dados na inicialização da factory do JPA, ou seja,
 a cada vez que criarmos uma instância de ainda veremos aqui no livro.
-- EntityManagerFactory como hibernate.dialect : dialeto a ser usado na construção de comandos SQL hibernate.show_sql : informa se os comandos SQL devem ser exibidos na
-console (importante para debug, mas deve ser desabilitado em ambiente de produção)
+- EntityManagerFactory como hibernate.dialect : dialeto a ser usado na construção de comandos `SQL hibernate.show_sql :` informa se os comandos SQL devem ser exibidos na console (importante para debug, mas deve ser desabilitado em ambiente de produção)
 - hibernate.format_sql : indica se os comandos SQL exibidos na console devem ser formatados (facilita a compreensão, mas pode gerar textos longos na saída)
 - Criação dos dados iniciais para o BD
 
@@ -66,23 +65,23 @@ values (3, 'VW', 'Gol', 2019, 2020, 35000);
 
 #### E - Gerando as tabelas do banco de dados
 - Como ainda não temos a tabela representada pela classe dados, precisamos criá-la.
-- O JPA pode fazer isso pra gente, graças à propriedade javax.persistence.schema-generation.database.action com valor drop-and-create , que incluímos no arquivo persistence.xml.
+- O **JPA** pode fazer isso pra gente, graças à propriedade `javax.persistence.schema-generation.database.action` com valor `drop-and-create` , que incluímos no arquivo `persistence.xml`.
 
 #### F - Definindo detalhes físicos de tabelas
 - Vamos analisar as alterações que fizemos individualmente.
-  - Especificamos o nome da tabela como tab_veiculo . Se não fizermos isso, o nome da tabela será considerado o mesmo nome da classe.
+  - Especificamos o nome da tabela como `tab_veiculo` . Se não fizermos isso, o nome da tabela será considerado o mesmo nome da classe.
 
 ```
 @Table(name = "tab_veiculo")
 public class Veiculo {
 ```
-  - Definimos o tamanho da coluna com 60 e com restrição not null.
+  - Definimos o tamanho da coluna com 60 e com restrição `not null`.
 
 ```
 @Column(length = 60, nullable = false)
 private String fabricante;
 ```
-  - Especificamos o nome da coluna como ano_fabricacao e com restrição not null. Se o nome da coluna não for especificado, por padrão, ela receberá o mesmo nome do atributo mapeado.
+  - Especificamos o nome da coluna como `ano_fabricacao` e com restrição `not null`. Se o nome da coluna não for especificado, por padrão, ela receberá o mesmo nome do atributo mapeado.
 
 ```
 @Column(name = "ano_fabricacao", nullable = false)
@@ -97,9 +96,47 @@ private BigDecimal valor;
 ```
 
 #### G - Criando EntityManager
-- Criamos um bloco estático para inicializar a fábrica de Entity Manager. Isso ocorrerá apenas uma vez, no carregamento da classe. Agora, sempre que
-precisarmos de uma EntityManager , podemos chamar:
+- Criamos um bloco estático para inicializar a fábrica de `Entity Manager`. Isso ocorrerá apenas uma vez, no carregamento da classe. Agora, sempre que precisarmos de uma `EntityManager` , podemos chamar:
 
 ```
 EntityManager manager = JpaUtil.getEntityManager();
+```
+- Persistindo objetos
+  - O código abaixo obtém um `EntityManager` , que é responsável por gerenciar o ciclo de vida das entidades.
+
+```
+EntityManager manager = JpaUtil.getEntityManager();
+```
+  - Agora iniciamos uma nova transação.
+
+```
+EntityTransaction tx = manager.getTransaction();
+tx.begin();
+```
+  - Instanciamos um novo veículo e atribuímos alguns valores, chamando os métodos `setters`.
+
+```
+Veiculo veiculo = new Veiculo();
+veiculo.setFabricante("Honda");
+veiculo.setModelo("Civic");
+veiculo.setAnoFabricacao(2020);
+veiculo.setAnoModelo(2020);
+veiculo.setValor(new BigDecimal(90500));
+```
+  - Executamos o método `persist` , passando a instância do veículo como parâmetro. Isso fará com que o JPA insira o objeto no banco de dados.
+  - Não informamos o código do veículo, porque ele será obtido automaticamente através do `auto-increment` do MySQL.
+
+```
+manager.persist(veiculo);
+```
+  - Agora fazemos `commit` da transação, para efetivar a inserção do veículo no banco de dados.
+
+```
+36tx.commit();
+```
+  - Finalmente, fechamos o `EntityManager` e o `EntityManagerFactory` .
+  
+```
+manager.close();
+JpaUtil.close();
 ```
