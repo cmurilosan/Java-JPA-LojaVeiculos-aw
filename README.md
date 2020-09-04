@@ -161,3 +161,22 @@ List<Veiculo> veiculos = query.getResultList();
 
 #### K - Excluindo objetos
 - A exclusão de objetos é feita chamando o método `remove` de `EntityManager`, passando como parâmetro o objeto da entidade.
+
+
+## 2 - Gerenciando estados
+
+#### A - Estados e ciclo de vida
+- Objetos transientes
+  - Objetos transientes `(transient)` são instanciados usando o operador `new` .
+  - Isso significa que eles ainda não estão associados com um registro na tabela do banco de dados e qualquer alteração em seus dados não afeta o estado no banco de dados.
+- Objetos gerenciados
+  -Objetos gerenciados `(managed)` são instâncias de entidades que possuem um identificador e representam um registro da tabela do banco de dados.
+  - As instâncias gerenciadas podem ser objetos que foram persistidos através da chamada de um método do `EntityManager` , como por exemplo o `persist` .
+  - Eles também podem ter se tornado gerenciados através de métodos de consulta do `EntityManager` , que buscam registros da base de dados e instanciam objetos diretamente no estado `managed`.
+  - Objetos gerenciados estão sempre associados a um contexto de persistência, portanto, quaisquer alterações nesses objetos são sincronizadas com o banco de dados.
+- Objetos removidos
+  - Uma instância de uma entidade pode ser excluída através do método `remove` do `EntityManager`. 
+  - Um objeto entra no estado removed quando ele é marcado para ser eliminado, mas é fisicamente excluído durante a sincronização com o banco de dados.
+- Objetos desanexados
+  - Um objeto sempre inicia no estado `transiente` e depois pode se tornar gerenciado. Quando o `EntityManager` é fechado, continua existindo uma instância do objeto, mas já no estado `detached`.
+  - Esse estado existe para quando os objetos estão desconectados, não tendo mais sincronia com o banco de dados.
